@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WorkerHomeActivity">
+
+    <TextView
+        android:id="@+id/mppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Malört Power Plant"
+        android:textSize="40sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/workerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Worker Name"
+        android:textSize="25sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mppTitle"
+        />
+
+    <Button
+        android:id="@+id/roomsButton"
+        android:layout_width="300dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="96dp"
+        android:text="Rooms"
+        android:background="@android:color/holo_blue_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/workerName"
+        />
+
+    <Button
+        android:id="@+id/workhistoryButton"
+        android:layout_width="300dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
+        android:text="Work History"
+        android:background="@android:color/holo_blue_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roomsButton"
+        />
+
+    <Button
+        android:id="@+id/clockoutButton"
+        android:layout_width="300dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
+        android:text="Clock out"
+        android:background="@android:color/holo_red_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/workhistoryButton"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
