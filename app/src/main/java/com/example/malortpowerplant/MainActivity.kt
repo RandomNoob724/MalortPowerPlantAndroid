@@ -10,6 +10,9 @@ import android.util.Log
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        CloudFirestore.instance.updateClockedIn("36 1F 1F F8")
+
         val bluetoothChipUUID = "98:D3:11:F8:6B:81"
         val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
         if(bluetoothAdapter == null){

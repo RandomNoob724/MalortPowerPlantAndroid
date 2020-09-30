@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "184894003923",
+    "firebase_url": "https://kotlin-is-shit.firebaseio.com",
+    "project_id": "kotlin-is-shit",
+    "storage_bucket": "kotlin-is-shit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184894003923:android:e75a5520e3b2df60955226",
+        "android_client_info": {
+          "package_name": "com.example.malortpowerplant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184894003923-56sfp0btbciokokopib6q2fpuljugrab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIoUAVjMPXryHnjMx-e9E-2cHqXNp87bM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184894003923-56sfp0btbciokokopib6q2fpuljugrab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
