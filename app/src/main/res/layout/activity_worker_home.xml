@@ -32,27 +32,15 @@
         />
 
     <Button
-        android:id="@+id/roomsButton"
-        android:layout_width="300dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="96dp"
-        android:text="Rooms"
-        android:background="@android:color/holo_blue_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/workerName"
-        />
-
-    <Button
         android:id="@+id/workhistoryButton"
         android:layout_width="300dp"
         android:layout_height="49dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="140dp"
         android:text="Work History"
         android:background="@android:color/holo_blue_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/roomsButton"
+        app:layout_constraintTop_toBottomOf="@id/workerName"
         />
 
     <Button
