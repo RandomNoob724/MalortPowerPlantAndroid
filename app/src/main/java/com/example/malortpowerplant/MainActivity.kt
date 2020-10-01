@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
@@ -18,13 +19,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CloudFirestore.instance.updateClockedIn("36 1F 1F F8")
+        CloudFirestore.instance.updateClockedIn("361F1FF8")
 
         val uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
         val bluetoothChipID = "98:D3:11:F8:6B:81"
         var bluetoothSocket: BluetoothSocket? = null
         var connectButton = findViewById<Button>(R.id.connectButton)
         var text = findViewById<TextView>(R.id.fucking_text)
+
+        var payloadData = findViewById<EditText>(R.id.text_to_send)
+        var sendButton = findViewById<Button>(R.id.send_button)
+
+        sendButton.setOnClickListener{
+            BluetoothHandler.bluetoothScope.launch {
+                BluetoothHandler.sendData(payloadData.text.toString())
+            }
+        }
 
         if(!BluetoothHandler.checkBluetoothAdapter()){
             val intent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)

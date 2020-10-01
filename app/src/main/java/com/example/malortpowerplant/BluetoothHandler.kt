@@ -1,21 +1,15 @@
 package com.example.malortpowerplant
 
-import android.R
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
-import android.content.ContentValues.TAG
-import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.provider.Settings.Global.DEVICE_NAME
+import android.system.Os.socket
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import java.io.*
 import java.util.*
-import kotlinx.coroutines.*
+
 
 object BluetoothHandler : Thread(){
     val bluetoothScope = CoroutineScope(Dispatchers.IO)
@@ -42,17 +36,39 @@ object BluetoothHandler : Thread(){
     }
 
     suspend fun awaitIncomingBluetoothData(){
-        var inputStream: DataInputStream?
-        var bufferedOutputStream: BufferedOutputStream?
-        var rfid: String = ""
-        val bytes: Int
         Log.d("bluetooth", (this.bluetoothSocket != null).toString())
         if(this.bluetoothSocket != null){
-            inputStream = DataInputStream(this.bluetoothSocket?.inputStream)
-            bytes = inputStream.read()
-            Log.d("bluetooth",  bytes.toString())
+
+            var bytes = "" // bytes returned from read()
+
+            try {
+                var tmpIn: BufferedInputStream? = null
+
+                // Get the BluetoothSocket input stream
+                tmpIn = BufferedInputStream(this.bluetoothSocket!!.inputStream)
+                val mmInStream = DataInputStream(tmpIn)
+
+                // Read from the InputStream
+                while(tmpIn.read().toChar() != '/'){
+                    bytes += tmpIn.read().toChar()
+                    Log.d("bluetooth", bytes)
+                }
+                // Send the obtained bytes to the UI Activity
+            } catch (e: Exception) {
+                Log.e("bluetooth", "Error with recieving message", e)
+            }
         } else {
             Log.d("bluetooth", "The bluetoothsocket is now null")
+        }
+    }
+
+    suspend fun sendData(payload: String){
+        var byteArray: ByteArray = payload.toByteArray()
+        try {
+            bluetoothSocket!!.outputStream.write(byteArray)
+            Log.d("bluetooth", "message sent through bluetooth")
+        } catch (e: IOException){
+            Log.d("bluetooth",  e.toString())
         }
     }
 
