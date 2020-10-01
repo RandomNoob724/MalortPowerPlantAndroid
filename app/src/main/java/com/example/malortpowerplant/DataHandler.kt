@@ -41,6 +41,6 @@ class CloudFirestore: CoroutineScope {
 
     }
 
-    suspend fun checkIfClockedIn(id: String) =
+    private suspend fun checkIfClockedIn(id: String) =
         db.collection("Worker").document(id).get().await()
 }
