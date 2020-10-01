@@ -7,11 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-<<<<<<< HEAD
 import android.widget.EditText
-=======
 import android.widget.ProgressBar
->>>>>>> 3fb0ac10ee22f729b24ff54280165fb3b8f5f006
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
