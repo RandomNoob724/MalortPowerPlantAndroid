@@ -20,15 +20,26 @@
         />
 
     <TextView
-        android:id="@+id/workerName"
+        android:id="@+id/timeLimitLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Worker Name"
-        android:textSize="25sp"
+        android:text="Radiation Time Limit"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mppTitle"
+        app:layout_constraintTop_toBottomOf="@id/mppTitle"
+        />
+
+    <TextView
+        android:id="@+id/timerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeLimitLabel"
         />
 
     <Button
@@ -40,7 +51,7 @@
         android:background="@android:color/holo_blue_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/workerName"
+        app:layout_constraintTop_toBottomOf="@id/timerLabel"
         />
 
     <Button

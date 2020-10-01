@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start)
         
         //CloudFirestore.instance.updateClockedIn("361F1FF8")
-        val timer = RadiationHandler.instance.setRadiationTimer()
-        timer.start()
 
         val uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
         val bluetoothChipID = "98:D3:11:F8:6B:81"
