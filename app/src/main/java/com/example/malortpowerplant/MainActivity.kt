@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-        
+
         //CloudFirestore.instance.updateClockedIn("361F1FF8")
         val timer = RadiationHandler.instance.setRadiationTimer()
         timer.start()
