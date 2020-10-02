@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.util.Log
+import com.google.firebase.FirebaseException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,7 +58,7 @@ object BluetoothHandler : Thread(){
                         Log.d("mmInStream.read(buffer);", String(buffer))
                         if (bytes > 0) {
                             // Send the obtained bytes to the UI activity
-                            Log.d("bluetooth", String(buffer))
+                            Log.d("bluetooth", "Direct value"+String(buffer))
                         }
 
                         if(String(buffer)[0] == 'P'){
@@ -76,6 +77,28 @@ object BluetoothHandler : Thread(){
                             Log.d("bluetooth", radValue.toString())
                             sendData("Tj"+radValue.toString())
                             RadiationHandler.instance.setRadiationOutput(radValue.toInt())
+                        }
+                        if(String(buffer)[0] == 'C'){
+                            var rfid = String(buffer)
+                            rfid = rfid.removeRange(0.rangeTo(0))
+                            Log.d("bluetooth", rfid)
+                            try {
+                                CloudFirestore.instance.updateClockedIn(rfid)
+                                bluetoothScope.launch {
+                                    var clockedIn = CloudFirestore.instance.checkIfClockedIn(rfid)
+                                    var bitToSend: Boolean =  clockedIn.data?.get("clockedIn") as Boolean
+                                    Log.d("bluetooth", bitToSend.toString())
+                                    if(!bitToSend){
+                                        Log.d("bluetooth", "C1"+rfid)
+                                        sendData("C1"+rfid)
+                                    } else {
+                                        Log.d("bluetooth", "C0"+rfid)
+                                        sendData("C0"+rfid)
+                                    }
+                                }
+                            }catch (e: FirebaseException){
+                                Log.d("firebase error", e.toString())
+                            }
                         }
                     }
                 } catch (e: IOException) {
