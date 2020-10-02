@@ -73,6 +73,7 @@ object BluetoothHandler : Thread(){
                             var radValue = RadiationHandler.instance.calculateSafetyTime()
                             Log.d("bluetooth", radValue.toString())
                             sendData("Tj"+radValue.toString())
+                            RadiationHandler.instance.setRadiationOutput(radValue.toInt())
                         }
                     }
                 } catch (e: IOException) {

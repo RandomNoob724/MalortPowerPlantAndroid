@@ -21,10 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        CloudFirestore.instance.updateClockedIn("361F1FF8")
-
-        val timer = RadiationHandler.instance.setRadiationTimer()
-        timer.start()
+        
+        //CloudFirestore.instance.updateClockedIn("361F1FF8")
 
         var payloadData = findViewById<EditText>(R.id.text_to_send)
         var sendButton = findViewById<Button>(R.id.send_button)
