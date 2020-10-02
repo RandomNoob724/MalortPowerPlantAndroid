@@ -20,8 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        
         //CloudFirestore.instance.updateClockedIn("361F1FF8")
 
         var payloadData = findViewById<EditText>(R.id.text_to_send)
