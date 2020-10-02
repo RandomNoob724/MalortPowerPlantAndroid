@@ -50,4 +50,16 @@ class RadiationHandler{
     fun setRadiationOutput(newRadiationOutput: Int){
         radiationOutput = newRadiationOutput
     }
+
+    fun getSeconds(): Int{
+        return seconds
+    }
+
+    fun getMinutes(): Int{
+        return minutes
+    }
+
+    fun getHours(): Int{
+        return hours
+    }
 }

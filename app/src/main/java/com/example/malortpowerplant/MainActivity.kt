@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,11 +19,10 @@ import kotlinx.coroutines.*
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CloudFirestore.instance.updateClockedIn("361F1FF8")
         setContentView(R.layout.activity_start)
 
         //CloudFirestore.instance.updateClockedIn("361F1FF8")
-        val timer = RadiationHandler.instance.setRadiationTimer()
-        timer.start()
 
         val uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
         val bluetoothChipID = "98:D3:11:F8:6B:81"
@@ -32,6 +32,15 @@ class MainActivity : AppCompatActivity() {
         var loadingIndicator = findViewById<ProgressBar>(R.id.loadingIndicator)
 
         loadingIndicator.visibility = View.VISIBLE
+
+        var payloadData = findViewById<EditText>(R.id.text_to_send)
+        var sendButton = findViewById<Button>(R.id.send_button)
+
+        sendButton.setOnClickListener{
+            BluetoothHandler.bluetoothScope.launch {
+                BluetoothHandler.sendData(payloadData.text.toString())
+            }
+        }
 
         if(!BluetoothHandler.checkBluetoothAdapter()){
             val intent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
