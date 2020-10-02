@@ -1,18 +1,17 @@
 package com.example.malortpowerplant
 
+import android.app.Activity
 import android.os.CountDownTimer
 import android.util.Log
 
-class RadiationHandler{
-    companion object{
-        val instance = RadiationHandler()
-    }
+object RadiationHandler{
 
     private val roomCoefficient = 1.6
     private val protectiveCoefficient = 1
     private var currentRadiation = 0.0
     private val radiationSafety = 500000
     private var radiationOutput = 30
+    private var newRadiationOutput = 30
     private lateinit var countDownTimer: CountDownTimer
     private var timeRemaining = 0L
     private var radsPerSecond: Double = 30.0
@@ -27,13 +26,17 @@ class RadiationHandler{
     }
 
     fun setRadiationTimer(): CountDownTimer{
-        countDownTimer = object: CountDownTimer(calculateSafetyTime()*1000L, 1000){
+        timeRemaining = calculateSafetyTime()
+
+        countDownTimer = object: CountDownTimer(1000000000000000L, 1000){
             override fun onFinish() {
                 Log.d("u ded", "u ded")
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                timeRemaining = millisUntilFinished / 1000
+
+                Log.d("hasse", timeRemaining.toString())
+                timeRemaining -= 1
                 timeFormation(timeRemaining)
                 currentRadiation += radsPerSecond
             }
@@ -47,9 +50,13 @@ class RadiationHandler{
         hours = (timeRemaining/3600).toInt()
     }
 
-    fun setRadiationOutput(newRadiationOutput: Int){
-        radiationOutput = newRadiationOutput
-        WorkerHomeActivity.instance.updatedRadiationOutput(newRadiationOutput)
+    fun setRadiationOutput(updatedRadiationOutput: Int){
+        radiationOutput = updatedRadiationOutput
+        timeRemaining = calculateSafetyTime()
+    }
+
+    fun getRadiationOutput(): Int{
+        return radiationOutput
     }
 
     fun getSeconds(): Int{

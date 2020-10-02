@@ -67,16 +67,16 @@ object BluetoothHandler : Thread(){
                                 value = String(buffer)[1].toString()
                             } else if(String(buffer).length == 4) {
                                 value = String(buffer)[1].toString() + String(buffer)[2].toString()
-                            } else {
+                            } else{
                                 value = "100"
                             }
                             Log.d("bluetooth", value)
-                            RadiationHandler.instance.setRadiationOutput(value.toInt())
-                            radiationOutput = value.toInt()
-                            var radValue = RadiationHandler.instance.calculateSafetyTime()
+                            RadiationHandler.setRadiationOutput(value.toInt())
+
+                            var radValue = RadiationHandler.calculateSafetyTime()
                             Log.d("bluetooth", radValue.toString())
+                            RadiationHandler.setRadiationOutput(value.toInt())
                             sendData("Tj"+radValue.toString())
-                            RadiationHandler.instance.setRadiationOutput(radValue.toInt())
                         }
                         if(String(buffer)[0] == 'C'){
                             var rfid = String(buffer)

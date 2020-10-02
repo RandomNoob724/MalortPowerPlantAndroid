@@ -13,12 +13,9 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_worker_home.*
 import java.util.Timer
 import kotlin.concurrent.schedule
+import kotlin.concurrent.timer
 
 class WorkerHomeActivity : AppCompatActivity() {
-
-    companion object{
-        val instance = WorkerHomeActivity()
-    }
 
     private lateinit var countDownTimer: CountDownTimer
     private var radiationOutput = BluetoothHandler.radiationOutput
@@ -26,19 +23,18 @@ class WorkerHomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_worker_home)
-        var debugButton = findViewById<Button>(R.id.debug)
+        //var debugButton = findViewById<Button>(R.id.debug)
 
         BluetoothHandler.bluetoothScope.launch {
             BluetoothHandler.awaitIncomingBluetoothData()
         }
 
-        debugButton.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        var timerLabel = findViewById<TextView>(R.id.timerLabel)
-        val timer = RadiationHandler.instance.setRadiationTimer()
+        //debugButton.setOnClickListener{
+        //    val intent = Intent(this, MainActivity::class.java)
+        //    startActivity(intent)
+        //}
+        val timerLabel = findViewById<TextView>(R.id.timerLabel)
+        val timer = RadiationHandler.setRadiationTimer()
         timer.start()
         updateTimerUI()
     }
@@ -53,21 +49,36 @@ class WorkerHomeActivity : AppCompatActivity() {
     }
 
     fun updateTimerUI() {
-        Log.d("hello","hej")
-
         countDownTimer =
-            object : CountDownTimer(RadiationHandler.instance.calculateSafetyTime() * 1000L, 1000) {
+            object : CountDownTimer(1000000000000000L, 1000) {
                 override fun onFinish() {
                     Log.d("u ded", "u ded")
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
-                    Log.d("hello","kjh")
+                    val hours = RadiationHandler.getHours()
+                    val minutes = RadiationHandler.getMinutes()
+                    val seconds = RadiationHandler.getSeconds()
+                    var stringHours = ""
+                    var stringMinutes = ""
+                    var stringSeconds = ""
+                    if(hours < 10) {
+                        stringHours = "0$hours"
+                    } else {
+                        stringHours = "$hours"
+                    }
+                    if(minutes < 10) {
+                        stringMinutes = "0$minutes"
+                    } else {
+                        stringMinutes = "$minutes"
+                    }
+                    if(seconds < 10) {
+                        stringSeconds = "0$seconds"
+                    } else {
+                        stringSeconds = "$seconds"
+                    }
 
-                    val hours = RadiationHandler.instance.getHours()
-                    val minutes = RadiationHandler.instance.getMinutes()
-                    val seconds = RadiationHandler.instance.getSeconds()
-                    timerLabel.text = "$hours:$minutes:$seconds"
+                    timerLabel.text = stringHours + ":" + stringMinutes + ":" + stringSeconds
 
                     if (hours == 2 && minutes == 53 && seconds == 30) {
                         warningNotification(hours, minutes, seconds)
@@ -75,10 +86,5 @@ class WorkerHomeActivity : AppCompatActivity() {
                 }
             }
         countDownTimer.start()
-    }
-    fun updatedRadiationOutput(newRadiationOutput: Int){
-        radiationOutput = newRadiationOutput
-        countDownTimer.cancel()
-        updateTimerUI()
     }
 }

@@ -42,40 +42,4 @@
         app:layout_constraintTop_toBottomOf="@+id/timeLimitLabel"
         />
 
-    <Button
-        android:id="@+id/workhistoryButton"
-        android:layout_width="300dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="140dp"
-        android:text="Work History"
-        android:background="@android:color/holo_blue_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timerLabel"
-        />
-
-    <Button
-        android:id="@+id/clockoutButton"
-        android:layout_width="300dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="48dp"
-        android:text="Clock out"
-        android:background="@android:color/holo_red_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/workhistoryButton"
-        />
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="48dp"
-        android:text="Debug"
-        android:id="@+id/debug"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clockoutButton"
-        />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
