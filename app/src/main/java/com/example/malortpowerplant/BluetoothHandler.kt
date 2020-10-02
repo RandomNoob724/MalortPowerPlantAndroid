@@ -3,12 +3,13 @@ package com.example.malortpowerplant
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
-import android.system.Os.socket
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import java.io.*
+import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.*
+import kotlin.concurrent.timer
 
 
 object BluetoothHandler : Thread(){
@@ -38,24 +39,46 @@ object BluetoothHandler : Thread(){
     suspend fun awaitIncomingBluetoothData(){
         Log.d("bluetooth", (this.bluetoothSocket != null).toString())
         if(this.bluetoothSocket != null){
+            var bytes: Int // bytes returned from read()
 
-            var bytes = "" // bytes returned from read()
+            var availableBytes = 0
+            // Keep listening to the InputStream until an exception occurs
+            // Keep listening to the InputStream until an exception occurs
+            while(bluetoothSocket!!.isConnected){
+                try {
+                    availableBytes = bluetoothSocket!!.inputStream.available()
 
-            try {
-                var tmpIn: BufferedInputStream? = null
+                    if (availableBytes > 0) {
+                        val buffer =
+                            ByteArray(availableBytes) // buffer store for the stream
+                        // Read from the InputStream
+                        bytes = bluetoothSocket!!.inputStream.read(buffer)
+                        Log.d("mmInStream.read(buffer);", String(buffer))
+                        if (bytes > 0) {
+                            // Send the obtained bytes to the UI activity
+                            Log.d("bluetooth", String(buffer))
+                        }
 
-                // Get the BluetoothSocket input stream
-                tmpIn = BufferedInputStream(this.bluetoothSocket!!.inputStream)
-                val mmInStream = DataInputStream(tmpIn)
-
-                // Read from the InputStream
-                while(tmpIn.read().toChar() != '/'){
-                    bytes += tmpIn.read().toChar()
-                    Log.d("bluetooth", bytes)
+                        if(String(buffer)[0] == 'P'){
+                            var value: String
+                            if(String(buffer).length == 3){
+                                value = String(buffer)[1].toString()
+                            } else if(String(buffer).length == 4) {
+                                value = String(buffer)[1].toString() + String(buffer)[2].toString()
+                            } else {
+                                value = "100"
+                            }
+                            Log.d("bluetooth", value)
+                            RadiationHandler.instance.setRadiationOutput(value.toInt())
+                            var radValue = RadiationHandler.instance.calculateSafetyTime()
+                            Log.d("bluetooth", radValue.toString())
+                            sendData("Tj"+radValue.toString())
+                            RadiationHandler.instance.setRadiationOutput(radValue.toInt())
+                        }
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
                 }
-                // Send the obtained bytes to the UI Activity
-            } catch (e: Exception) {
-                Log.e("bluetooth", "Error with recieving message", e)
             }
         } else {
             Log.d("bluetooth", "The bluetoothsocket is now null")
