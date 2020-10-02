@@ -15,6 +15,7 @@ import kotlin.concurrent.timer
 object BluetoothHandler : Thread(){
     val bluetoothScope = CoroutineScope(Dispatchers.IO)
     private var bluetoothSocket: BluetoothSocket? = null
+    public var radiationOutput = 30
 
     fun createBluetoothConnectionWithId(id: String, uuid: UUID) {
         var bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
@@ -70,6 +71,7 @@ object BluetoothHandler : Thread(){
                             }
                             Log.d("bluetooth", value)
                             RadiationHandler.instance.setRadiationOutput(value.toInt())
+                            radiationOutput = value.toInt()
                             var radValue = RadiationHandler.instance.calculateSafetyTime()
                             Log.d("bluetooth", radValue.toString())
                             sendData("Tj"+radValue.toString())

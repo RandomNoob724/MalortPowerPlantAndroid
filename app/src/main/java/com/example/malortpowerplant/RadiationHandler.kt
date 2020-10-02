@@ -49,7 +49,7 @@ class RadiationHandler{
 
     fun setRadiationOutput(newRadiationOutput: Int){
         radiationOutput = newRadiationOutput
-
+        WorkerHomeActivity.instance.updatedRadiationOutput(newRadiationOutput)
     }
 
     fun getSeconds(): Int{

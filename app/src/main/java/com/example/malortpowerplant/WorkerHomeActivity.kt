@@ -15,7 +15,13 @@ import java.util.Timer
 import kotlin.concurrent.schedule
 
 class WorkerHomeActivity : AppCompatActivity() {
+
+    companion object{
+        val instance = WorkerHomeActivity()
+    }
+
     private lateinit var countDownTimer: CountDownTimer
+    private var radiationOutput = BluetoothHandler.radiationOutput
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +53,8 @@ class WorkerHomeActivity : AppCompatActivity() {
     }
 
     fun updateTimerUI() {
+        Log.d("hello","hej")
+
         countDownTimer =
             object : CountDownTimer(RadiationHandler.instance.calculateSafetyTime() * 1000L, 1000) {
                 override fun onFinish() {
@@ -54,6 +62,8 @@ class WorkerHomeActivity : AppCompatActivity() {
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
+                    Log.d("hello","kjh")
+
                     val hours = RadiationHandler.instance.getHours()
                     val minutes = RadiationHandler.instance.getMinutes()
                     val seconds = RadiationHandler.instance.getSeconds()
@@ -65,5 +75,10 @@ class WorkerHomeActivity : AppCompatActivity() {
                 }
             }
         countDownTimer.start()
+    }
+    fun updatedRadiationOutput(newRadiationOutput: Int){
+        radiationOutput = newRadiationOutput
+        countDownTimer.cancel()
+        updateTimerUI()
     }
 }
