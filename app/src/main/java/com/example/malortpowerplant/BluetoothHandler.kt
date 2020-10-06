@@ -3,6 +3,7 @@ package com.example.malortpowerplant
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.Intent
 import android.util.Log
 import com.google.firebase.FirebaseException
 import kotlinx.coroutines.CoroutineScope
@@ -94,6 +95,8 @@ object BluetoothHandler : Thread(){
                                     } else {
                                         Log.d("bluetooth", "C0"+rfid)
                                         sendData("C0"+rfid)
+                                        BluetoothHandler.bluetoothSocket!!.close()
+                                        MainActivity.instance.finishActivity()
                                     }
                                 }
                             }catch (e: FirebaseException){

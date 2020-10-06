@@ -17,6 +17,9 @@ import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        val instance = MainActivity()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,5 +33,11 @@ class MainActivity : AppCompatActivity() {
                 BluetoothHandler.sendData(payloadData.text.toString())
             }
         }
+    }
+
+    fun finishActivity(){
+        val intent = Intent(this, StartActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
