@@ -56,6 +56,9 @@ class WorkerHomeActivity : AppCompatActivity() {
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
+                    if(!BluetoothHandler.getConnection()){
+                        finish()
+                    }
                     val hours = RadiationHandler.getHours()
                     val minutes = RadiationHandler.getMinutes()
                     val seconds = RadiationHandler.getSeconds()

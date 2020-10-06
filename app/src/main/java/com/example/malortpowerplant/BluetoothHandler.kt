@@ -83,24 +83,25 @@ object BluetoothHandler : Thread(){
                             var rfid = String(buffer)
                             rfid = rfid.removeRange(0.rangeTo(0))
                             Log.d("bluetooth", rfid)
-                            try {
-                                CloudFirestore.instance.updateClockedIn(rfid)
-                                bluetoothScope.launch {
-                                    var clockedIn = CloudFirestore.instance.checkIfClockedIn(rfid)
-                                    var bitToSend: Boolean =  clockedIn.data?.get("clockedIn") as Boolean
-                                    Log.d("bluetooth", bitToSend.toString())
-                                    if(!bitToSend){
-                                        Log.d("bluetooth", "C1"+rfid)
-                                        sendData("C1"+rfid)
-                                    } else {
-                                        Log.d("bluetooth", "C0"+rfid)
-                                        sendData("C0"+rfid)
-                                        BluetoothHandler.bluetoothSocket!!.close()
-                                        MainActivity.instance.finishActivity()
+                            if(rfid != "C"){
+                                try {
+                                    CloudFirestore.instance.updateClockedIn(rfid)
+                                    bluetoothScope.launch {
+                                        var clockedIn = CloudFirestore.instance.checkIfClockedIn(rfid)
+                                        var bitToSend: Boolean =  clockedIn.data?.get("clockedIn") as Boolean
+                                        Log.d("bluetooth", bitToSend.toString())
+                                        if(!bitToSend){
+                                            Log.d("bluetooth", "C1"+rfid)
+                                            sendData("C1"+rfid)
+                                        } else {
+                                            Log.d("bluetooth", "C0"+rfid)
+                                            sendData("C0"+rfid)
+                                            BluetoothHandler.bluetoothSocket!!.close()
+                                        }
                                     }
+                                }catch (e: FirebaseException){
+                                    Log.d("firebase error", e.toString())
                                 }
-                            }catch (e: FirebaseException){
-                                Log.d("firebase error", e.toString())
                             }
                         }
                     }
